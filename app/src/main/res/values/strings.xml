@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Find Move</string>
+    <string name="move_name">نام فيلم:</string>
+    <string name="name_director">نام كارگردان:</string>
+    <string name="year_of_construction">سال ساخت:</string>
+    <string name="name_author">نام نويسنده:</string>
+</resources>
