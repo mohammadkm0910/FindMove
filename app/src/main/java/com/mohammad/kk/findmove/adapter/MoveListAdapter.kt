@@ -3,7 +3,6 @@ package com.mohammad.kk.findmove.adapter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.mohammad.kk.findmove.R
@@ -19,17 +17,25 @@ import com.mohammad.kk.findmove.model.MoveItem
 
 
 class MoveListAdapter(private var context: Context, private var moveItems: List<MoveItem>) : RecyclerView.Adapter<MoveListAdapter.ViewHolder>() {
-    private val lastPosition = -1
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var pictureFromMove:ShapeableImageView = itemView.findViewById(R.id.pictureFromMove)
-        var textNameMove:TextView = itemView.findViewById(R.id.textNameMove)
-        var textNameDirector:TextView = itemView.findViewById(R.id.textNameDirector)
-        var textYearOfConstruction:TextView = itemView.findViewById(R.id.textYearOfConstruction)
-        var textNameAuthor:TextView = itemView.findViewById(R.id.textNameAuthor)
-        var textShortDescription:TextView = itemView.findViewById(R.id.textShortDescription)
-        var btnExpandableButton:ImageButton = itemView.findViewById(R.id.btnExpandableButton)
-        var textFullDescription:TextView = itemView.findViewById(R.id.textFullDescription)
-
+        val pictureFromMove:ShapeableImageView = itemView.findViewById(R.id.pictureFromMove)
+        private val textNameMove:TextView = itemView.findViewById(R.id.textNameMove)
+        private val textNameDirector:TextView = itemView.findViewById(R.id.textNameDirector)
+        private val textYearOfConstruction:TextView = itemView.findViewById(R.id.textYearOfConstruction)
+        private val textNameAuthor:TextView = itemView.findViewById(R.id.textNameAuthor)
+        private val expandTextView:TextView = itemView.findViewById(R.id.expandTextView)
+        val btnExpanded:ImageButton = itemView.findViewById(R.id.btnExpanded)
+        fun bind(move: MoveItem){
+            val expanded = move.isExpanded
+            pictureFromMove.setImageResource(move.picture)
+            textNameMove.text = move.name
+            textNameDirector.text = move.director
+            textYearOfConstruction.text = move.yearOfConstruction
+            textNameAuthor.text = move.nameAuthor
+            expandTextView.text = move.fullDescription
+            expandTextView.maxLines = if (expanded) Int.MAX_VALUE else 3
+            if (expanded) btnExpanded.setImageResource(R.drawable.ic_arrow_down) else btnExpanded.setImageResource(R.drawable.ic_arrow_up)
+        }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_move_recycler, parent, false)
@@ -37,28 +43,15 @@ class MoveListAdapter(private var context: Context, private var moveItems: List<
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val moveItem = moveItems[position]
-        holder.pictureFromMove.setImageResource(moveItem.picture)
-        holder.textNameMove.text = moveItem.name
-        holder.textNameDirector.text = moveItem.director
-        holder.textYearOfConstruction.text = moveItem.yearOfConstruction
-        holder.textNameAuthor.text = moveItem.nameAuthor
-        holder.textShortDescription.text = moveItem.shortDescription
+        holder.bind(moveItem)
         holder.pictureFromMove.setOnClickListener {
             createAlertDialog(moveItem.picture, moveItem.name)
         }
-        holder.btnExpandableButton.setOnClickListener { v->
-            if (!moveItem.setExtExpandable){
-                holder.textFullDescription.visibility = View.VISIBLE
-                v.animate().rotation(180f).setDuration(500).start()
-                moveItem.setExtExpandable = true
-            } else {
-                holder.textFullDescription.visibility = View.GONE
-                v.animate().rotation(0f).setDuration(500).start()
-                moveItem.setExtExpandable = false
-            }
+        holder.btnExpanded.setOnClickListener {
+            val expanded = moveItem.isExpanded
+            moveItem.isExpanded = !expanded
+            notifyItemChanged(position)
         }
-        holder.textFullDescription
-        holder.textFullDescription.text = moveItem.fullDescription
     }
     override fun getItemCount(): Int {
         return moveItems.size
@@ -81,5 +74,5 @@ class MoveListAdapter(private var context: Context, private var moveItems: List<
         dialog.window!!.attributes.windowAnimations = R.style.DialogFullImage
         dialog.show()
     }
-
 }
+

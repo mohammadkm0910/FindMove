@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.godfatherYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.godfatherNameAuthor}",
                 HelperMoves.godfatherFullDescription.toNumberFA(),
-                HelperMoves.godfatherFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.cityOfGodsYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.cityOfGodsNameAuthor}",
                 HelperMoves.cityOfGodsFullDescription.toNumberFA(),
-                HelperMoves.cityOfGodsFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.millionDollarBabyYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.millionDollarBabyNameAuthor}",
                 HelperMoves.millionDollarBabyFullDescription.toNumberFA(),
-                HelperMoves.millionDollarBabyFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -55,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.theIrishmanYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.theIrishmanNameAuthor}",
                 HelperMoves.theIrishmanFullDescription.toNumberFA(),
-                HelperMoves.theIrishmanFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.heatYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.heatNameAuthor}",
                 HelperMoves.heatFullDescription.toNumberFA(),
-                HelperMoves.heatFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -77,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.arrivalYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.arrivalNameAuthor}",
                 HelperMoves.arrivalFullDescription.toNumberFA(),
-                HelperMoves.arrivalFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -88,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.theDropYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.theDropNameAuthor}",
                 HelperMoves.theDropFullDescription.toNumberFA(),
-                HelperMoves.theDropFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -99,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.onceUponATimeInHollywoodYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.onceUponATimeInHollywoodNameAuthor}",
                 HelperMoves.onceUponATimeInHollywoodFullDescription.toNumberFA(),
-                HelperMoves.onceUponATimeInHollywoodFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -110,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.roomYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.roomNameAuthor}",
                 HelperMoves.roomFullDescription.toNumberFA(),
-                HelperMoves.roomFullDescription.toNumberFA()
             )
         )
         moveItems.add(
@@ -121,11 +112,10 @@ class MainActivity : AppCompatActivity() {
                 "${HelperMoves.yearOfConstruction} ${HelperMoves.whiplashYearOfConstruction}".toNumberFA(),
                 "${HelperMoves.nameAuthor} ${HelperMoves.whiplashNameAuthor}",
                 HelperMoves.whiplashFullDescription.toNumberFA(),
-                HelperMoves.whiplashFullDescription.toNumberFA()
             )
         )
         moveRecycler.adapter = MoveListAdapter(this,moveItems)
         moveRecycler.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+        moveRecycler.setHasFixedSize(true)
     }
-
 }
