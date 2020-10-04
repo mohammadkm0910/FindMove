@@ -4,4 +4,8 @@
     <string name="name_director">نام كارگردان:</string>
     <string name="year_of_construction">سال ساخت:</string>
     <string name="name_author">نام نويسنده:</string>
+    <string name="extension_method">extension method</string>
+    <string name="hint_expression">عبارت عددی یا محاسباتی</string>
+    <string name="hint_move_list_app">تصاویر فیلم ها</string>
+    <string name="send_image_url_to_image">ارسال تصویر به برنامه</string>
 </resources>

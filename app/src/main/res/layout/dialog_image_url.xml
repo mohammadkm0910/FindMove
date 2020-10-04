@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/dialogImgUrl"
+    android:layoutDirection="rtl">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconMode="dropdown_menu"
+        android:layout_marginHorizontal="35dp"
+        app:boxBackgroundMode="outline"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:hint="@string/hint_move_list_app">
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:id="@+id/edtListImageMoveDevice"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendImageUrlToApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_image_url_to_image"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:backgroundTint="@color/blueA200"
+        app:cornerRadius="8dp"
+        android:layout_below="@+id/layoutText"
+        android:layout_toStartOf="@+id/storageImage"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/dialogCloseImageUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        android:tint="@color/white"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        app:backgroundTint="@color/red500"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/layoutText" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/storageImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_image"
+        android:tint="@color/white"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:layout_toStartOf="@+id/dialogCloseImageUrl"
+        android:layout_below="@+id/layoutText" />
+</RelativeLayout>
