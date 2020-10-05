@@ -7,17 +7,18 @@
     android:orientation="vertical"
     android:layoutDirection="rtl">
     <ImageButton
-        android:id="@+id/btnCloseDialog"
+        android:id="@+id/closeDialogShowPoster"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/background_ripple_circle"
         android:src="@drawable/ic_close"
         android:contentDescription="@null"/>
     <ImageView
-        android:id="@+id/imgFullMoveDialog"
+        android:id="@+id/imagePosterMove"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:contentDescription="@null"
+        android:scaleType="fitXY"
         android:layout_marginTop="8dp"/>
     <TextView
         android:id="@+id/textNameMoveDialog"

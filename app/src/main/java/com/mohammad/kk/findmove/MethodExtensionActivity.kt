@@ -1,43 +1,55 @@
 package com.mohammad.kk.findmove
 
 import android.Manifest
-import android.app.DownloadManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.mohammad.kk.findmove.util.Extension.eval
 import com.mohammad.kk.findmove.util.Extension.getUrl
+import com.mohammad.kk.findmove.util.Extension.isInternet
 import com.mohammad.kk.findmove.util.Extension.loadUrl
 import com.mohammad.kk.findmove.util.Extension.toEnNumbers
 import com.mohammad.kk.findmove.util.Extension.toFaNumbers
 import com.mohammad.kk.findmove.util.Extension.toSeparatorComma
 import kotlinx.android.synthetic.main.activity_method_extension.*
-import kotlinx.android.synthetic.main.dialog_image_url.*
-
 
 class MethodExtensionActivity : AppCompatActivity() {
-    private var isOpenMenu = false
-    private var isEnDigits = false
     private var MODE_TEXT = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_method_extension)
+        setSupportActionBar(toolbarExtension)
+        val imageButton = ImageButton(this)
+        val layoutParent = Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT,Toolbar.LayoutParams.WRAP_CONTENT)
+        layoutParent.gravity = Gravity.END
+        layoutParent.setMargins(8,0,0,0)
+        imageButton.layoutParams = layoutParent
+        imageButton.setImageResource(R.drawable.ic_arrow_down)
+        imageButton.rotation = 90F
+        imageButton.setBackgroundResource(R.drawable.background_ripple_circle)
+        imageButton.imageTintList = ColorStateList.valueOf(Color.WHITE)
+        imageButton.setOnClickListener { onBackPressed() }
+        toolbarExtension.addView(imageButton)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(
@@ -52,48 +64,56 @@ class MethodExtensionActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 expressionTextView.text = setupText(MODE_TEXT, s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
         expressionEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-        fabMenu.setOnClickListener {
-            val open = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.move_up)
-            val exit = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.move_down)
-            fabMenu.setImageResource(if (!isOpenMenu) R.drawable.ic_close else R.drawable.ic_menu)
-            fabCalculator.visibility = if (!isOpenMenu) View.VISIBLE else View.INVISIBLE
-            fabCalculator.startAnimation(if (!isOpenMenu) open else exit)
-            fabLangNumber.visibility = if (!isOpenMenu) View.VISIBLE else View.INVISIBLE
-            fabLangNumber.startAnimation(if (!isOpenMenu) open else exit)
-            fabSeparatorComma.visibility = if (!isOpenMenu) View.VISIBLE else View.INVISIBLE
-            fabSeparatorComma.startAnimation(if (!isOpenMenu) open else exit)
-            isOpenMenu = !isOpenMenu
-        }
-        fabCalculator.setOnClickListener {
-            MODE_TEXT = 0
-            expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
-            expressionEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-            activeFab()
-        }
-        fabLangNumber.setOnClickListener {
-            MODE_TEXT = if (!isEnDigits) 1 else 2
-            fabLangNumber.setImageResource(if (!isEnDigits) R.drawable.fa_number else R.drawable.en_number)
-            expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
-            expressionEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            activeFab()
-            isEnDigits = !isEnDigits
-        }
-        fabSeparatorComma.setOnClickListener {
-            MODE_TEXT = 3
-            expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
-            activeFab()
-            expressionEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        }
-        loadImageInternet.loadUrl("https://arga-mag.com/file/img/2017/04/Canada2.jpg")
-        fabLoadImageUrl.setOnClickListener {
-            createViewDialog()
-        }
         loadImageInternet.setOnClickListener {
             Toast.makeText(this,loadImageInternet.getUrl(),Toast.LENGTH_LONG).show()
+        }
+        if (!isInternet(this)){
+            loadImageInternet.loadUrl(R.drawable.nature_default)
+        } else {
+            loadImageInternet.loadUrl("http://www.coca.ir/wp-content/uploads/2017/07/beautiful-dream-nature-photos-8.jpg")
+        }
+        setupDrawer()
+    }
+
+    private fun setupDrawer () {
+        val actionToggleButton = ActionBarDrawerToggle(this,drawerExtension,toolbarExtension,0,0)
+        drawerExtension.addDrawerListener(actionToggleButton)
+        actionToggleButton.syncState()
+        navExtension.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.separatorNumber ->{
+                    MODE_TEXT = 3
+                    expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
+                    expressionEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    drawerExtension.closeDrawer(navExtension)
+                }
+                R.id.faNumber ->{
+                    MODE_TEXT = 1
+                    expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
+                    expressionEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    drawerExtension.closeDrawer(navExtension)
+                }
+                R.id.enEnglish ->{
+                    MODE_TEXT = 2
+                    expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
+                    expressionEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    drawerExtension.closeDrawer(navExtension)
+                }
+                R.id.calculatorExpression ->{
+                    MODE_TEXT = 0
+                    expressionTextView.text = setupText(MODE_TEXT, expressionEditText.text.toString())
+                    expressionEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                    drawerExtension.closeDrawer(navExtension)
+                }
+                R.id.loadPictureInActivity ->{
+                    createViewDialog()
+                    drawerExtension.closeDrawer(navExtension)
+                }
+            }
+            true
         }
     }
     private fun setupText(config: Int, text: String) = when(config){
@@ -102,24 +122,6 @@ class MethodExtensionActivity : AppCompatActivity() {
         2 -> text.toEnNumbers()
         3 -> text.toSeparatorComma()
         else -> text
-    }
-    private fun activeFab(){
-        val activeColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.blueA200))
-        val normalColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorAccent))
-        when (MODE_TEXT) {
-            fabCalculator.tag.toString().toInt() -> fabCalculator.backgroundTintList = activeColor
-            else -> fabCalculator.backgroundTintList = normalColor
-        }
-        when (MODE_TEXT) {
-            fabLangNumber.tag.toString().toInt() -> fabLangNumber.backgroundTintList = activeColor
-            2 -> fabLangNumber.backgroundTintList = activeColor
-            else -> fabLangNumber.backgroundTintList = normalColor
-        }
-        when (MODE_TEXT) {
-            fabSeparatorComma.tag.toString().toInt() -> fabSeparatorComma.backgroundTintList =
-                activeColor
-            else -> fabSeparatorComma.backgroundTintList = normalColor
-        }
     }
     private fun createViewDialog(){
         val view = LayoutInflater.from(this).inflate(
@@ -136,18 +138,12 @@ class MethodExtensionActivity : AppCompatActivity() {
         val dialogCloseImageUrl = view.findViewById<AppCompatImageButton>(R.id.dialogCloseImageUrl)
         val storageImage = view.findViewById<AppCompatImageButton>(R.id.storageImage)
         val listMove = arrayOf(
-            HelperMoves.godfatherName,
-            HelperMoves.cityOfGodsName,
-            HelperMoves.millionDollarBabyName,
-            HelperMoves.theIrishmanName,
-            HelperMoves.heatName,
-            HelperMoves.arrivalName,
-            HelperMoves.theDropName,
-            HelperMoves.onceUponATimeInHollywoodName,
-            HelperMoves.roomName,
+            HelperMoves.godfatherName, HelperMoves.cityOfGodsName, HelperMoves.millionDollarBabyName,
+            HelperMoves.theIrishmanName, HelperMoves.heatName, HelperMoves.arrivalName,
+            HelperMoves.theDropName, HelperMoves.onceUponATimeInHollywoodName, HelperMoves.roomName,
             HelperMoves.whiplashName,
         )
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listMove)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,listMove)
         edtListImageMoveDevice.setAdapter(adapter)
         sendImageUrlToApp.setOnClickListener {
             if (edtListImageMoveDevice.text.toString().isNotEmpty()){

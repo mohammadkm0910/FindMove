@@ -9,9 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mohammad.kk.findmove.adapter.MoveListAdapter
@@ -19,6 +17,7 @@ import com.mohammad.kk.findmove.model.MoveItem
 import com.mohammad.kk.findmove.util.Extension.toFaNumbers
 import com.mohammad.kk.findmove.util.RootSnackBar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_show_poster.view.*
 
 class MainActivity : AppCompatActivity() {
     private var moveItems: ArrayList<MoveItem> = ArrayList()
@@ -140,26 +139,20 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.activityExtensionMethod)
-            startActivity(Intent(this,MethodExtensionActivity::class.java))
+        if (item.itemId == R.id.activityExtensionMethod) startActivity(Intent(this,MethodExtensionActivity::class.java))
         return super.onOptionsItemSelected(item)
     }
     private fun createAlertDialog(moveItem: MoveItem){
-        val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_move_full_list, null)
-        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
-        val imgFullMoveDialog = view.findViewById<ImageView>(R.id.imgFullMoveDialog)
-        val textNameMoveDialog = view.findViewById<TextView>(R.id.textNameMoveDialog)
-
+        val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_show_poster, null)
         val builder = AlertDialog.Builder(this)
             .setView(view)
         val dialog = builder.create()
-        btnCloseDialog.setOnClickListener {
-            dialog.dismiss()
-        }
-        imgFullMoveDialog.setBackgroundResource(moveItem.picture)
-        imgFullMoveDialog.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
-        textNameMoveDialog.text = moveItem.name
+        view.closeDialogShowPoster.setOnClickListener { dialog.dismiss() }
+        view.imagePosterMove.setImageResource(moveItem.picture)
+        view.imagePosterMove.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
+        view.textNameMoveDialog.text = moveItem.name
         dialog.window!!.attributes.windowAnimations = R.style.DialogFullImage
+        dialog.window!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_round))
         dialog.show()
     }
 }

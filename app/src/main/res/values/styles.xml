@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="DialogFullImage" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="DialogFullImage" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowEnterAnimation">@anim/zoom_in</item>
         <item name="android:windowExitAnimation">@anim/zoom_out</item>
     </style>

@@ -1,5 +1,7 @@
 package com.mohammad.kk.findmove.util
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
@@ -105,9 +107,15 @@ object Extension {
             else -> Log.d("tag","Invalid address")
         }
         urlLoad = url.toString()
-        this.scaleType = ImageView.ScaleType.FIT_XY
+        this.scaleType = ImageView.ScaleType.CENTER_CROP
     }
     fun ImageView.getUrl():String{
         return if (urlLoad.isNotEmpty()) urlLoad else ""
+    }
+    @Suppress("DEPRECATION")
+    fun isInternet(context: Context):Boolean{
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val info = cm.activeNetworkInfo
+        return info != null && info.isConnected
     }
 }
