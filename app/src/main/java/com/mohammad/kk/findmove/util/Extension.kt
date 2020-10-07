@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.ImageView
+import com.mohammad.kk.findmove.R
 import com.squareup.picasso.Picasso
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.util.*
@@ -102,20 +103,41 @@ object Extension {
     }
     fun ImageView.loadUrl(url: Any){
         when (url) {
-            is String -> Picasso.get().load(url).into(this)
-            is Int -> Picasso.get().load(url).into(this)
+            is String -> Picasso.get().load(url).error(R.drawable.error_loading_image).into(this)
+            is Int -> Picasso.get().load(url).error(R.drawable.error_loading_image).into(this)
             else -> Log.d("tag","Invalid address")
         }
         urlLoad = url.toString()
-        this.scaleType = ImageView.ScaleType.CENTER_CROP
     }
-    fun ImageView.getUrl():String{
-        return if (urlLoad.isNotEmpty()) urlLoad else ""
+    fun ImageView.getUrl():String {
+        return if (this.drawable != null){
+            urlLoad
+        } else {
+            "null"
+        }
+    }
+    fun ImageView.getImageInfo():String {
+        return if (this.drawable != null){
+            "${this.drawable.intrinsicWidth} × ${this.drawable.intrinsicHeight} ${getTypeFormat(this)}"
+        } else {
+            "null"
+        }
     }
     @Suppress("DEPRECATION")
     fun isInternet(context: Context):Boolean{
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info = cm.activeNetworkInfo
         return info != null && info.isConnected
+    }
+    private fun getTypeFormat(imageView: ImageView):String{
+        return when {
+            ".jpg" in imageView.getUrl() -> "JPEG"
+            ".png" in imageView.getUrl() -> "PNG"
+            ".gif" in imageView.getUrl() -> "GIF"
+            ".gif" in imageView.getUrl() -> "GIF"
+            ".webp" in imageView.getUrl() -> "WebP"
+            else -> ""
+
+        }
     }
 }
