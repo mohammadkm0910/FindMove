@@ -3,15 +3,14 @@ package com.mohammad.kk.findmove
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
@@ -22,14 +21,12 @@ import com.mohammad.kk.findmove.model.MoveItem
 import com.mohammad.kk.findmove.util.Extension.toFaNumbers
 import com.mohammad.kk.findmove.util.RootSnackBar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_show_poster.*
 import kotlinx.android.synthetic.main.dialog_show_poster.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
     private var moveItems: ArrayList<MoveItem> = ArrayList()
     private var counter = 0
-    private var color = 0
     private lateinit var moveListAdapter: MoveListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,27 +132,36 @@ class MainActivity : AppCompatActivity() {
                 HelperMoves.whiplashFullDescription.toFaNumbers(),
             )
         )
-        val showSnackBar : (MoveItem) -> Unit = {i->
+        val showSnackBar : (MoveItem) -> Unit = { i->
             counter++
             if (counter > 6) counter = 0
-            RootSnackBar(this,i.name,counter).show()
-            toolbarApp.setBackgroundColor(color)
-            createAlertDialog(i)
+            val imageView = ImageView(this)
+            imageView.setImageResource(i.picture)
+            val bitmap = imageView.drawable.toBitmap()
+            RootSnackBar(this, i.name, counter).show()
+            toolbarApp.setBackgroundColor(getColor(bitmap))
         }
-        moveListAdapter = MoveListAdapter(moveItems,showSnackBar,{ moveItem: MoveItem -> createAlertDialog(moveItem,true)})
+        moveListAdapter = MoveListAdapter(moveItems, showSnackBar, { moveItem: MoveItem ->
+            createAlertDialog(moveItem)
+        })
         moveRecycler.adapter = moveListAdapter
-        moveRecycler.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+        moveRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         moveRecycler.setHasFixedSize(true)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_action_bar,menu)
+        menuInflater.inflate(R.menu.menu_action_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.activityExtensionMethod) startActivity(Intent(this,MethodExtensionActivity::class.java))
+        if (item.itemId == R.id.activityExtensionMethod) startActivity(
+            Intent(
+                this,
+                MethodExtensionActivity::class.java
+            )
+        )
         return super.onOptionsItemSelected(item)
     }
-    private fun createAlertDialog(moveItem: MoveItem,isShow:Boolean = false){
+    private fun createAlertDialog(moveItem: MoveItem){
         val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_show_poster, null)
         val builder = AlertDialog.Builder(this)
             .setView(view)
@@ -165,15 +171,19 @@ class MainActivity : AppCompatActivity() {
         view.imagePosterMove.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
         view.textNameMoveDialog.text = moveItem.name
         dialog.window!!.attributes.windowAnimations = R.style.DialogFullImage
-        dialog.window!!.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_round))
-        color = getColor(view.imagePosterMove.drawable.toBitmap())
-        toolbarApp.setBackgroundColor(getColor(view.imagePosterMove.drawable.toBitmap()))
-        if (isShow) dialog.show()
+        dialog.window!!.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.background_round
+            )
+        )
+        dialog.show()
     }
     private fun getColor(bitmap: Bitmap):Int {
-        val defaultColor = ContextCompat.getColor(this,R.color.blueA200)
+        val defaultColor = ContextCompat.getColor(this, R.color.blueA200)
         val palette = Palette.from(bitmap).generate()
         val muted = palette.getMutedColor(defaultColor)
         return palette.getVibrantColor(muted)
     }
+
 }

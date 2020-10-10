@@ -68,7 +68,7 @@ object Extension {
         return result
     }
     fun String.toSeparatorComma():String{
-        if (this.isNotEmpty()){
+        if (this.isNotEmpty() && !this.startsWith(".")){
             val lst = StringTokenizer(this, ".")
             var str1 = this
             var str2 = ""
@@ -98,7 +98,7 @@ object Extension {
                 k--
             }
         } else {
-            return ""
+            return this
         }
     }
     fun ImageView.loadUrl(url: Any){
