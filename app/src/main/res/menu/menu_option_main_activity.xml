@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/activityExtensionMethod"
+        android:id="@+id/extensionMethod"
         android:title="@string/extension_method"
         android:icon="@drawable/ic_extension"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/reloadActivity"
+        android:title="@string/extension_method"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="ifRoom"/>
 </menu>

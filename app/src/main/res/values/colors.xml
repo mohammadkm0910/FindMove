@@ -10,4 +10,6 @@
     <color name="blueA200">#448AFF</color>
     <color name="transparent">#00000000</color>
     <color name="gray100">#F5F5F5</color>
+    <color name="blue500">#2196F3</color>
+    <color name="deepPurple500">#9575CD</color>
 </resources>

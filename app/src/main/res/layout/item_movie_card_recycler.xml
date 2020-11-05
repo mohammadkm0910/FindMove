@@ -49,7 +49,7 @@
             app:layout_constraintRight_toLeftOf="@+id/pictureFromMove"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp">
-            <TextView
+            <com.mohammad.kk.findmove.views.FontTextView
                 android:id="@+id/textNameMove"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -57,7 +57,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/move_name"
                 android:textColor="@color/black" />
-            <TextView
+            <com.mohammad.kk.findmove.views.FontTextView
                 android:id="@+id/textNameDirector"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -65,7 +65,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/name_director"
                 android:textColor="@color/black"/>
-            <TextView
+            <com.mohammad.kk.findmove.views.FontTextView
                 android:id="@+id/textYearOfConstruction"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -74,7 +74,7 @@
                 android:text="@string/year_of_construction"
                 android:textColor="@color/black"/>
         </LinearLayout>
-        <TextView
+        <com.mohammad.kk.findmove.views.FontTextView
             android:id="@+id/textNameAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textNameAuthor"
             android:layout_marginStart="8dp"/>
-        <TextView
+        <com.mohammad.kk.findmove.views.FontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/expandTextView"

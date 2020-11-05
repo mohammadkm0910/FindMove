@@ -1,24 +1,20 @@
 package com.mohammad.kk.findmove.adapter
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.text.GetChars
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.AndroidViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.mohammad.kk.findmove.R
-import com.mohammad.kk.findmove.model.MoveItem
+import com.mohammad.kk.findmove.model.MovieItem
 
 
-class MoveListAdapter(private var moveItems: List<MoveItem>,private var onClickListener:(MoveItem)-> Unit,
-                      private var onLongListener:(MoveItem)-> Unit) : RecyclerView.Adapter<MoveListAdapter.ViewHolder>() {
-    private lateinit var bitmap:Bitmap
+class MovieListAdapter(private var items: ArrayList<MovieItem>, private var onClickListener:(MovieItem)-> Unit,
+                       private var onLongListener:(MovieItem)-> Unit) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val pictureFromMove:ShapeableImageView = itemView.findViewById(R.id.pictureFromMove)
         private val textNameMove:TextView = itemView.findViewById(R.id.textNameMove)
@@ -28,7 +24,7 @@ class MoveListAdapter(private var moveItems: List<MoveItem>,private var onClickL
         private val expandTextView:TextView = itemView.findViewById(R.id.expandTextView)
         private val clickItem:FrameLayout = itemView.findViewById(R.id.clickItem)
         val btnExpanded:ImageButton = itemView.findViewById(R.id.btnExpanded)
-        fun bind(move: MoveItem){
+        fun bind(move: MovieItem){
             val expanded = move.isExpanded
             pictureFromMove.setImageResource(move.picture)
             textNameMove.text = move.name
@@ -40,37 +36,35 @@ class MoveListAdapter(private var moveItems: List<MoveItem>,private var onClickL
             if (expanded) btnExpanded.setImageResource(R.drawable.ic_arrow_down) else btnExpanded.setImageResource(R.drawable.ic_arrow_up)
 
         }
-        fun imgClick(moveItem: MoveItem,onClickListener: (MoveItem) -> Unit) {
+        fun imgClick(items: MovieItem,onClickListener: (MovieItem) -> Unit) {
             clickItem.setOnClickListener {
-                onClickListener(moveItem)
+                onClickListener(items)
 
             }
         }
-        fun longClick(moveItem: MoveItem,onLongListener: (MoveItem) -> Unit){
+        fun longClick(items: MovieItem,onLongListener: (MovieItem) -> Unit){
             clickItem.setOnLongClickListener {
-                onLongListener(moveItem)
+                onLongListener(items)
                 true
             }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_move_card_recycler, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie_card_recycler, parent, false)
         return ViewHolder(view)
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val moveItem = moveItems[position]
-        holder.bind(moveItem)
+        val items = items[position]
+        holder.bind(items)
         holder.btnExpanded.setOnClickListener {
-            val expanded = moveItem.isExpanded
-            moveItem.isExpanded = !expanded
+            val expanded = items.isExpanded
+            items.isExpanded = !expanded
             notifyItemChanged(position)
         }
-        holder.imgClick(moveItem,onClickListener)
-        holder.longClick(moveItem,onLongListener)
+        holder.imgClick(items,onClickListener)
+        holder.longClick(items,onLongListener)
     }
-    override fun getItemCount(): Int {
-        return moveItems.size
-    }
+    override fun getItemCount(): Int = items.size
 }
 
 

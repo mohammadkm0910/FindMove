@@ -1,15 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="rtl"
+    android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical">
     <include layout="@layout/toolbar"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/moveRecycler"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mainAppBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="@dimen/app_bar_collapsing_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/mainToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+            <ImageView
+                android:id="@+id/mainPosterMovie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/moveRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/mainAppBar"
+        android:contentDescription="@null"
+        app:layout_anchorGravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_like"
+        app:tint="@color/gray100"
+        android:backgroundTint="@color/pinkA200"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

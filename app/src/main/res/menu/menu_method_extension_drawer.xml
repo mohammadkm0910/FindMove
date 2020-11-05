@@ -16,9 +16,5 @@
         android:id="@+id/calculatorExpression"
         android:title="@string/calc_expression"
         android:icon="@drawable/ic_calculator"/>
-    <item
-        android:id="@+id/loadPictureInActivity"
-        android:title="@string/load_image"
-        android:icon="@drawable/ic_image"/>
 
 </menu>

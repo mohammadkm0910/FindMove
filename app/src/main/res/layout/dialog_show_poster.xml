@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
     android:orientation="vertical"
     android:layoutDirection="rtl">
@@ -14,18 +15,18 @@
         android:src="@drawable/ic_close"
         android:contentDescription="@null"/>
     <ImageView
-        android:id="@+id/imagePosterMove"
+        android:id="@+id/posterMovie"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:contentDescription="@null"
         android:scaleType="fitXY"
         android:layout_marginTop="8dp"/>
     <TextView
-        android:id="@+id/textNameMoveDialog"
+        android:id="@+id/nameMovie"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="8dp"
         android:textSize="15sp"
         android:textColor="@color/black"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

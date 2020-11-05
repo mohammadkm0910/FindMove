@@ -1,6 +1,6 @@
 package com.mohammad.kk.findmove.model
 
-class MoveItem(
+data class MovieItem(
     var picture: Int,
     var name: String,
     var director: String,

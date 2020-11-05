@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MethodExtensionActivity"
     android:layoutDirection="rtl"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:id="@+id/drawerExtension">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context=".MethodExtensionActivity"
+        android:layoutDirection="rtl"
+        android:background="@color/white"
         android:orientation="vertical">
         <include layout="@layout/toolbar"/>
         <ProgressBar
@@ -22,39 +24,134 @@
             android:layout_marginTop="-4dp"
             android:indeterminateOnly="true"
             android:visibility="invisible"/>
-        <EditText
-            android:id="@+id/expressionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="text"
-            android:maxLines="1"
-            android:hint="@string/hint_expression"
-            android:background="@drawable/focusable_input"
-            android:importantForAutofill="no" />
-        <TextView
-            android:id="@+id/expressionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="40dp"/>
-        <ImageView
-            android:id="@+id/loadImageInternet"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="8dp"
-            android:layout_marginHorizontal="16dp"
-            android:contentDescription="@null"
-            android:scaleType="fitXY"
-            android:layout_marginBottom="8dp"/>
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tabText"
+                android:visibility="visible">
+                <EditText
+                    android:id="@+id/expressionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:hint="@string/hint_expression"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/focusable_input"
+                    android:importantForAutofill="no" />
+                <TextView
+                    android:id="@+id/expressionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_below="@+id/expressionEditText"/>
+                <com.mohammad.kk.findmove.views.MyKeyboard
+                    android:id="@+id/keyApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/expressionTextView"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/tabImage"
+                android:visibility="gone">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="dropdown_menu"
+                    android:layout_marginHorizontal="35dp"
+                    app:boxBackgroundMode="outline"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/hint_move_list_app">
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:id="@+id/edtSearchMovie"
+                        tools:ignore="LabelFor" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:paddingVertical="4dp">
+                    <ImageButton
+                        android:id="@+id/btnDoneUrl"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/ic_done"
+                        android:background="@drawable/background_round_image_button"
+                        android:tint="@color/gray100"
+                        android:contentDescription="@null"/>
+                    <ImageButton
+                        android:id="@+id/btnStorageImage"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/ic_storage"
+                        android:background="@drawable/background_round_image_button"
+                        android:tint="@color/gray100"
+                        android:contentDescription="@null"
+                        android:layout_marginStart="4dp"/>
+                    <ImageButton
+                        android:id="@+id/btnUrlImgWebView"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/ic_web_view"
+                        android:background="@drawable/background_round_image_button"
+                        android:tint="@color/gray100"
+                        android:contentDescription="@null"
+                        android:layout_marginStart="4dp"/>
+                    <ImageButton
+                        android:id="@+id/btnClearUrl"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/ic_close"
+                        android:background="@drawable/background_round_image_button"
+                        android:tint="@color/gray100"
+                        android:contentDescription="@null"
+                        android:layout_marginStart="4dp"/>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/loadImageInternet"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
+        </FrameLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/tabBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_extension_method_tab"/>
     </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navExtension"
-        android:layout_width="wrap_content"
+    <WebView
+        android:id="@+id/webLoad"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_method_extension_drawer"/>
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        app:behavior_peekHeight="0dp"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

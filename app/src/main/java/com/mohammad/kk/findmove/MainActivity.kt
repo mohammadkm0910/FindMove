@@ -3,6 +3,7 @@ package com.mohammad.kk.findmove
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,167 +17,160 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mohammad.kk.findmove.adapter.MoveListAdapter
-import com.mohammad.kk.findmove.model.MoveItem
+import com.mohammad.kk.findmove.Helper.*
+import com.mohammad.kk.findmove.adapter.MovieListAdapter
+import com.mohammad.kk.findmove.model.MovieItem
 import com.mohammad.kk.findmove.util.Extension.toFaNumbers
 import com.mohammad.kk.findmove.util.RootSnackBar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_show_poster.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
-    private var moveItems: ArrayList<MoveItem> = ArrayList()
-    private var counter = 0
-    private lateinit var moveListAdapter: MoveListAdapter
+    private var items: ArrayList<MovieItem> = ArrayList()
+    private val rootSnackBarProvider: RootSnackBar by inject()
+    private lateinit var movieListAdapter: MovieListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbarApp)
-        moveItems.add(
-            MoveItem(
+        setSupportActionBar(mainToolbar)
+        mainPosterMovie.setImageResource(R.drawable.godfather)
+        items.add(
+            MovieItem(
                 R.drawable.godfather,
-                "${HelperMoves.name} ${HelperMoves.godfatherName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.godfatherNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.godfatherYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.godfatherNameAuthor}",
-                HelperMoves.godfatherFullDescription.toFaNumbers(),
+                "$name $godfatherName",
+                "$nameDirector $godfatherNameDirector",
+                "$yearOfConstruction $godfatherYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $godfatherNameAuthor",
+                godfatherFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.city_of_gods,
-                "${HelperMoves.name} ${HelperMoves.cityOfGodsName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.cityOfGodsNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.cityOfGodsYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.cityOfGodsNameAuthor}",
-                HelperMoves.cityOfGodsFullDescription.toFaNumbers(),
+                "$name $cityOfGodsName",
+                "$nameDirector $cityOfGodsNameDirector",
+                "$yearOfConstruction $cityOfGodsYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $cityOfGodsNameAuthor",
+                cityOfGodsFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.baby_million_dollar,
-                "${HelperMoves.name} ${HelperMoves.millionDollarBabyName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.millionDollarBabyNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.millionDollarBabyYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.millionDollarBabyNameAuthor}",
-                HelperMoves.millionDollarBabyFullDescription.toFaNumbers(),
+                "$name $millionDollarBabyName",
+                "$nameDirector $millionDollarBabyNameDirector",
+                "$yearOfConstruction $millionDollarBabyYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $millionDollarBabyNameAuthor",
+                millionDollarBabyFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.the_irishman,
-                "${HelperMoves.name} ${HelperMoves.theIrishmanName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.theIrishmanNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.theIrishmanYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.theIrishmanNameAuthor}",
-                HelperMoves.theIrishmanFullDescription.toFaNumbers(),
+                "$name $theIrishmanName",
+                "$nameDirector $theIrishmanNameDirector",
+                "$yearOfConstruction $theIrishmanYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $theIrishmanNameAuthor",
+                theIrishmanFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.heat,
-                "${HelperMoves.name} ${HelperMoves.heatName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.heatNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.heatYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.heatNameAuthor}",
-                HelperMoves.heatFullDescription.toFaNumbers(),
+                "$name $heatName",
+                "$nameDirector $heatNameDirector",
+                "$yearOfConstruction $heatYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $heatNameAuthor",
+                heatFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.arrival,
-                "${HelperMoves.name} ${HelperMoves.arrivalName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.arrivalNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.arrivalYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.arrivalNameAuthor}",
-                HelperMoves.arrivalFullDescription.toFaNumbers(),
+                "$name $arrivalName",
+                "$nameDirector $arrivalNameDirector",
+                "$yearOfConstruction $arrivalYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $arrivalNameAuthor",
+                arrivalFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.the_drop,
-                "${HelperMoves.name} ${HelperMoves.theDropName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.theDropNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.theDropYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.theDropNameAuthor}",
-                HelperMoves.theDropFullDescription.toFaNumbers(),
+                "$name $theDropName",
+                "$nameDirector $theDropNameDirector",
+                "$yearOfConstruction $theDropYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $theDropNameAuthor",
+                theDropFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.once_upon_a_time_in_hollywood,
-                "${HelperMoves.name} ${HelperMoves.onceUponATimeInHollywoodName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.onceUponATimeInHollywoodNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.onceUponATimeInHollywoodYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.onceUponATimeInHollywoodNameAuthor}",
-                HelperMoves.onceUponATimeInHollywoodFullDescription.toFaNumbers(),
+                "$name $onceUponATimeInHollywoodName",
+                "$nameDirector $onceUponATimeInHollywoodNameDirector",
+                "$yearOfConstruction $onceUponATimeInHollywoodYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $onceUponATimeInHollywoodNameAuthor",
+                onceUponATimeInHollywoodFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.room,
-                "${HelperMoves.name} ${HelperMoves.roomName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.roomNameDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.roomYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.roomNameAuthor}",
-                HelperMoves.roomFullDescription.toFaNumbers(),
+                "$name $roomName",
+                "$nameDirector $roomNameDirector",
+                "$yearOfConstruction $roomYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $roomNameAuthor",
+                roomFullDescription.toFaNumbers(),
             )
         )
-        moveItems.add(
-            MoveItem(
+        items.add(
+            MovieItem(
                 R.drawable.whiplash,
-                "${HelperMoves.name} ${HelperMoves.whiplashName}",
-                "${HelperMoves.nameDirector} ${HelperMoves.whiplashDirector}",
-                "${HelperMoves.yearOfConstruction} ${HelperMoves.whiplashYearOfConstruction}".toFaNumbers(),
-                "${HelperMoves.nameAuthor} ${HelperMoves.whiplashNameAuthor}",
-                HelperMoves.whiplashFullDescription.toFaNumbers(),
+                "$name $whiplashName",
+                "$nameDirector $whiplashDirector",
+                "$yearOfConstruction $whiplashYearOfConstruction".toFaNumbers(),
+                "$nameAuthor $whiplashNameAuthor",
+                whiplashFullDescription.toFaNumbers(),
             )
         )
-        val showSnackBar : (MoveItem) -> Unit = { i->
-            counter++
-            if (counter > 6) counter = 0
-            val imageView = ImageView(this)
-            imageView.setImageResource(i.picture)
-            val bitmap = imageView.drawable.toBitmap()
-            RootSnackBar(this, i.name, counter).show()
-            toolbarApp.setBackgroundColor(getColor(bitmap))
+        val showSnackBar : (MovieItem) -> Unit = { i->
+            mainPosterMovie.setImageResource(i.picture)
+            val bitmap = mainPosterMovie.drawable.toBitmap()
+            rootSnackBarProvider.show(this@MainActivity,i.name,true)
+            mainToolbarLayout.setContentScrimColor(getColor(bitmap))
         }
-        moveListAdapter = MoveListAdapter(moveItems, showSnackBar, { moveItem: MoveItem ->
-            createAlertDialog(moveItem)
+        movieListAdapter = MovieListAdapter(items, showSnackBar, {
+            createAlertDialog(it)
         })
-        moveRecycler.adapter = moveListAdapter
+        moveRecycler.adapter = movieListAdapter
         moveRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         moveRecycler.setHasFixedSize(true)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_action_bar, menu)
+        menuInflater.inflate(R.menu.menu_option_main_activity, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.activityExtensionMethod) startActivity(
-            Intent(
-                this,
-                MethodExtensionActivity::class.java
-            )
-        )
+        if (item.itemId == R.id.extensionMethod) {
+            val intent = Intent(this,MethodExtensionActivity::class.java)
+            startActivity(intent)
+        } else if (item.itemId == R.id.reloadActivity) recreate()
         return super.onOptionsItemSelected(item)
     }
-    private fun createAlertDialog(moveItem: MoveItem){
+    private fun createAlertDialog(items: MovieItem){
         val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_show_poster, null)
         val builder = AlertDialog.Builder(this)
             .setView(view)
         val dialog = builder.create()
         view.closeDialogShowPoster.setOnClickListener { dialog.dismiss() }
-        view.imagePosterMove.setImageResource(moveItem.picture)
-        view.imagePosterMove.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
-        view.textNameMoveDialog.text = moveItem.name
-        dialog.window!!.attributes.windowAnimations = R.style.DialogFullImage
-        dialog.window!!.setBackgroundDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.background_round
-            )
-        )
+        view.posterMovie.setImageResource(items.picture)
+        view.posterMovie.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
+        view.nameMovie.text = items.name
+        dialog.window!!.attributes.windowAnimations = R.style.DialogZoomAnim
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.background_round)
         dialog.show()
     }
     private fun getColor(bitmap: Bitmap):Int {

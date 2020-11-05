@@ -5,10 +5,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-    <style name="DialogFullImage" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogZoomAnim" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowEnterAnimation">@anim/zoom_in</item>
         <item name="android:windowExitAnimation">@anim/zoom_out</item>
+    </style>
+    <style name="KeyMyKeyboardWeightRow">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/blueA200</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
     <style name="ShapeCircleImageView">
         <item name="cornerSize">50%</item>

@@ -4,11 +4,13 @@
     package="com.mohammad.kk.findmove">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +21,7 @@
         tools:targetApi="m">
         <activity
             android:name=".MethodExtensionActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize">

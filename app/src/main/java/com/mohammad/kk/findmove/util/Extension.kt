@@ -1,12 +1,18 @@
 package com.mohammad.kk.findmove.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
+import android.webkit.WebSettings
+import android.webkit.WebStorage
+import android.webkit.WebView
+import android.webkit.WebViewDatabase
 import android.widget.ImageView
 import com.mohammad.kk.findmove.R
 import com.squareup.picasso.Picasso
 import net.objecthunter.exp4j.ExpressionBuilder
+import org.apache.http.conn.ConnectTimeoutException
 import java.util.*
 
 object Extension {
@@ -123,12 +129,6 @@ object Extension {
             "null"
         }
     }
-    @Suppress("DEPRECATION")
-    fun isInternet(context: Context):Boolean{
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val info = cm.activeNetworkInfo
-        return info != null && info.isConnected
-    }
     private fun getTypeFormat(imageView: ImageView):String{
         return when {
             ".jpg" in imageView.getUrl() -> "JPEG"
@@ -139,5 +139,27 @@ object Extension {
             else -> ""
 
         }
+    }
+    @Suppress("DEPRECATION")
+    fun isInternet(context: Context):Boolean{
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val  ni = cm.activeNetworkInfo
+        return ni != null && ni.isConnectedOrConnecting
+    }
+    @SuppressLint("SetJavaScriptEnabled")
+    fun WebView.initializedPrivateWebView(){
+        this.settings.javaScriptEnabled = true
+        this.settings.allowContentAccess = true
+        this.settings.domStorageEnabled = true
+        this.settings.databaseEnabled = true
+        this.settings.setSupportZoom(true)
+        this.settings.builtInZoomControls = true
+        this.settings.displayZoomControls = false
+        this.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
+        this.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        this.clearHistory()
+        this.clearCache(true)
+        this.clearFormData()
+        WebStorage.getInstance().deleteAllData()
     }
 }
