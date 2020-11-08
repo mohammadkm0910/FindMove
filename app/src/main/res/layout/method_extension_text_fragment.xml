@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/textMethodLayout">
+        <EditText
+            android:id="@+id/expressionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="text"
+            android:maxLines="1"
+            android:hint="@string/hint_expression"
+            android:background="@drawable/focusable_input"
+            android:importantForAutofill="no" />
+        <TextView
+            android:id="@+id/expressionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="40dp" />
+        <com.mohammad.kk.findmove.views.MyKeyboard
+            android:id="@+id/keyApp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="4dp"/>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressRefreshCenter"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+</FrameLayout>

@@ -19,9 +19,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity
-            android:name=".MethodExtensionActivity"
-            android:configChanges="orientation|screenSize" />
+        <activity android:name=".SecondActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize">

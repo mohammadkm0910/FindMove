@@ -5,14 +5,12 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
     defaultConfig {
         applicationId "com.mohammad.kk.findmove"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.8"
-
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,6 +20,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // Configure only for each module that uses Java 8
+    // language features (either in its source code or
+    // through dependencies).
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // For Kotlin projects
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -35,11 +45,10 @@ dependencies {
     implementation 'net.objecthunter:exp4j:0.4.8'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:palette-v7:30.0.0'
-    
+    implementation "androidx.browser:browser:1.2.0"
     implementation "org.koin:koin-android:2.1.6"
     implementation "org.koin:koin-android-scope:2.1.6"
     implementation "org.koin:koin-android-viewmodel:2.1.6"
-
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

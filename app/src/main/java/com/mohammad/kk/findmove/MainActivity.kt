@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.extensionMethod) {
-            val intent = Intent(this,MethodExtensionActivity::class.java)
+            val intent = Intent(this,SecondActivity::class.java)
             startActivity(intent)
         } else if (item.itemId == R.id.reloadActivity) recreate()
         return super.onOptionsItemSelected(item)
